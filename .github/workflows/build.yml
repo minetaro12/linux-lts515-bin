@@ -33,9 +33,6 @@ jobs:
           
           repo-add linux-lts515-bin.db.tar.gz *.pkg.tar.zst
           
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3  
-
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
