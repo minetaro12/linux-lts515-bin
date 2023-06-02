@@ -1,0 +1,36 @@
+name: build
+
+on:
+  #push:
+  #  branches:
+  #    - master
+  #schedule:
+  #  - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+    steps:
+
+      - name: Build
+        run: |
+          useradd -m user
+          usermod -aG wheel user
+          echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+          pacman -Syu git --noconfirm
+          chown user:user $(pwd)
+          
+          sudo -u user git clone https://aur.archlinux.org/linux-lts515.git
+          cd mozc-ut
+          echo "ver=$(cat PKGBUILD | grep pkgver | cut -d "=" -f 2)" >> $GITHUB_ENV
+          sudo -u user makepkg -s --noconfirm
+          mv *.pkg.tar.zst ../
+          cd ..
+          
+          repo-add linux-lts515-bin.db.tar.gz *.pkg.tar.zst
+          
+          - name: Setup tmate session
+            uses: mxschmitt/action-tmate@v3  
