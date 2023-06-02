@@ -33,17 +33,17 @@ jobs:
           
           repo-add linux-lts515-bin.db.tar.gz *.pkg.tar.zst
           
-          - name: Setup tmate session
-            uses: mxschmitt/action-tmate@v3  
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3  
 
-          - name: Upload binaries to release
-            uses: svenstaro/upload-release-action@v2
-            with:
-              repo_token: ${{ secrets.GITHUB_TOKEN }}
-              tag: ${{ env.ver }}
-              overwrite: true
-              file_glob: true
-              file: |
-                ./*.pkg.tar.zst
-                ./linux-lts515-bin.db*
-                ./linux-lts515-bin.files*
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.ver }}
+          overwrite: true
+          file_glob: true
+          file: |
+            ./*.pkg.tar.zst
+            ./linux-lts515-bin.db*
+            ./linux-lts515-bin.files*
