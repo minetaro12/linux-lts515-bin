@@ -25,7 +25,7 @@ jobs:
           
           sudo -u user git clone https://aur.archlinux.org/linux-lts515.git
           cd linux-lts515
-          echo "ver=$(cat PKGBUILD | grep pkgver | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "ver=$(cat PKGBUILD | grep pkgver= | cut -d "=" -f 2)" >> $GITHUB_ENV
           sudo -u user gpg --recv-keys 38DBBDC86092693E
           sudo -u user makepkg -s --noconfirm
           mv *.pkg.tar.zst ../
