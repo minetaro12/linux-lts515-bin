@@ -24,7 +24,7 @@ jobs:
           chown user:user $(pwd)
           
           sudo -u user git clone https://aur.archlinux.org/linux-lts515.git
-          cd mozc-ut
+          cd linux-lts515
           echo "ver=$(cat PKGBUILD | grep pkgver | cut -d "=" -f 2)" >> $GITHUB_ENV
           sudo -u user makepkg -s --noconfirm
           mv *.pkg.tar.zst ../
