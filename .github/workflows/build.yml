@@ -27,7 +27,7 @@ jobs:
           cd linux-lts515
           
           sed -i 's/pkgname=("$pkgbase" "$pkgbase-headers" "$pkgbase-docs")/pkgname=("$pkgbase" "$pkgbase-headers")/g' PKGBUILD
-          sed -i 's/make htmldocs all/make all/g' PKGBUILD
+          sed -i 's/make htmldocs all/make -j$(nproc) all/g' PKGBUILD
           
           echo "ver=$(cat PKGBUILD | grep pkgver= | cut -d "=" -f 2)" >> $GITHUB_ENV
           
