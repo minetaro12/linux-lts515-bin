@@ -23,13 +23,10 @@ jobs:
           pacman -Syu git --noconfirm
           chown user:user $(pwd)
           
-          sudo -u user git clone https://aur.archlinux.org/linux-lts515.git
-          cd linux-lts515
+          sudo -u user git clone https://github.com/minetaro12/linux-lts515-bin.git src
+          cd src
           
-          sed -i 's/pkgname=("$pkgbase" "$pkgbase-headers" "$pkgbase-docs")/pkgname=("$pkgbase" "$pkgbase-headers")/g' PKGBUILD
-          sed -i 's/make htmldocs all/make -j$(nproc) all/g' PKGBUILD
-          
-          echo "ver=$(cat PKGBUILD | grep pkgver= | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "ver=$(cat PKGBUILD | grep pkgver= | cut -d "=" -f2)-$(cat PKGBUILD | grep pkgrel= | cut -d "=" -f2)" >> $GITHUB_ENV
           
           sudo -u user gpg --recv-keys 38DBBDC86092693E
           sudo -u user makepkg -s --noconfirm
